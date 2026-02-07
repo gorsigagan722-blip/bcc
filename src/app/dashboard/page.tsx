@@ -1,48 +1,75 @@
 'use client';
 
-import { useUser } from '@/firebase';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { MainContent } from '@/components/dashboard/main-content';
-import { Stats } from '@/components/dashboard/stats';
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Lock } from 'lucide-react';
+
+const mockTests = [
+    { id: 1, date: '2024-07-18', language: 'English', name: 'Grade - D', speed: '80 WPM', words: 797, duration: '50 Minutes' },
+    { id: 2, date: '2024-07-18', language: 'English', name: 'Grade - C', speed: '100 WPM', words: 794, duration: '45 Minutes' },
+    { id: 3, date: '2024-06-29', language: 'English', name: 'Grade - C', speed: '105 WPM', words: 800, duration: '50 Minutes' },
+    { id: 4, date: '2024-06-29', language: 'English', name: 'Grade - D', speed: '85 WPM', words: 828, duration: '65 Minutes' },
+    { id: 5, date: '2024-06-25', language: 'Hindi', name: 'Grade - C', speed: '90 WPM', words: 900, duration: '50 Minutes' },
+];
 
 export default function StudentDashboardPage() {
-  const { user } = useUser();
+    const [searchTerm, setSearchTerm] = useState('');
 
-  const getAvatarFallback = (email: string | null | undefined) => {
-    if (!email) return 'U';
-    return email.charAt(0).toUpperCase();
-  };
+    const filteredTests = mockTests.filter(test => 
+        test.language.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        test.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        test.speed.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   return (
-    <div className="space-y-8 animate-fade-in-up">
-      <header className="overflow-hidden rounded-xl border bg-card/80 shadow-sm backdrop-blur-sm">
-        <div className="p-6 md:p-8">
-            <div className="flex flex-col-reverse items-start justify-between gap-4 md:flex-row">
-                <div className="space-y-2">
-                    <h1 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-                    Welcome back, {user?.displayName ?? 'Student'}!
-                    </h1>
-                    <p className="text-muted-foreground">
-                    Let’s continue your learning journey today ✨
-                    </p>
-                </div>
-                <div className="flex w-full items-center justify-between md:w-auto md:justify-start md:gap-4">
-                    <div className="rounded-full border bg-background/50 px-3 py-1.5 text-xs font-medium backdrop-blur-sm">
-                        Student ID: #{user?.uid.slice(0, 6).toUpperCase() ?? 'N/A'}
-                    </div>
-                    <Avatar className="h-10 w-10 border-2 border-primary/50">
-                    <AvatarImage src={user?.photoURL ?? undefined} />
-                    <AvatarFallback>{getAvatarFallback(user?.email)}</AvatarFallback>
-                    </Avatar>
-                </div>
-            </div>
+    <div className="space-y-6">
+        <div className="flex items-center gap-4">
+            <Input 
+                placeholder="Search..." 
+                className="max-w-xs"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <Button>Search</Button>
         </div>
-      </header>
-      
-      <Stats />
 
-      <MainContent />
-
+        <div className="overflow-hidden rounded-lg border bg-card">
+             <Table>
+                <TableHeader className="bg-secondary">
+                    <TableRow>
+                        <TableHead className="w-[50px] font-bold text-foreground">S.NO.</TableHead>
+                        <TableHead className="font-bold text-foreground">DATE</TableHead>
+                        <TableHead className="font-bold text-foreground">LANGUAGE</TableHead>
+                        <TableHead className="font-bold text-foreground">TEST NAME</TableHead>
+                        <TableHead className="font-bold text-foreground">DICTATION SPEED</TableHead>
+                        <TableHead className="font-bold text-foreground">TOTAL WORDS</TableHead>
+                        <TableHead className="font-bold text-foreground">DURATION</TableHead>
+                        <TableHead className="text-center font-bold text-foreground">ACTION</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {filteredTests.map((test, index) => (
+                        <TableRow key={test.id}>
+                            <TableCell>{index + 1}</TableCell>
+                            <TableCell>{test.date}</TableCell>
+                            <TableCell>{test.language}</TableCell>
+                            <TableCell>{test.name}</TableCell>
+                            <TableCell>{test.speed}</TableCell>
+                            <TableCell>{test.words}</TableCell>
+                            <TableCell>{test.duration}</TableCell>
+                            <TableCell className="text-center">
+                                <Button className="bg-blue-500 text-white hover:bg-blue-600">
+                                    <Lock className="mr-2 h-4 w-4" />
+                                    Paid Test
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </div>
     </div>
   );
 }
