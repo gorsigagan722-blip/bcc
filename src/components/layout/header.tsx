@@ -18,7 +18,7 @@ const BrandLogo = () => (
     <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.location.href = '/'}>
       <SiteLogo className="h-8 w-8" />
       <span className="font-bold text-lg text-foreground hidden sm:inline-block">
-        Bharat Communication Center
+        BHARAT COMMUNICATION CENTER
       </span>
     </div>
   );
@@ -59,7 +59,8 @@ export function Header() {
     { href: '/', label: 'Home' },
     { href: '/#courses', label: 'Typing Course' },
     { href: '/#courses', label: 'Stenography Course' },
-    { href: '/dashboard/tests', label: 'Free Tests' },
+    { href: '/dashboard/tests', label: 'Hindi Steno Test' },
+    { href: '/dashboard/tests', label: 'English Steno Test' },
     ...(!user && !isUserLoading ? [
         { href: '/signup', label: 'Register' },
         { href: '/login', label: 'Login' }
@@ -68,7 +69,6 @@ export function Header() {
         { href: dashboardHref, label: 'Dashboard' }
     ] : []),
     { href: '#', label: 'About Us' },
-    { href: '#contact', label: 'Contact' },
 ];
 
   const NavLinks = ({ inSheet }: { inSheet?: boolean }) => (

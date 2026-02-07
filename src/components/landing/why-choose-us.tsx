@@ -1,4 +1,4 @@
-import { BarChart, Goal, Sparkles, UserCheck } from 'lucide-react';
+import { Sparkles, TrendingUp, FileText, LayoutDashboard } from 'lucide-react';
 
 const features = [
   {
@@ -7,19 +7,19 @@ const features = [
     description: 'Engaging daily exercises tailored to improve your skills efficiently.',
   },
   {
-    icon: Goal,
-    title: 'Speed Tests',
-    description: 'Regularly test your speed and accuracy to track improvement.',
+    icon: TrendingUp,
+    title: 'Speed Improvement',
+    description: 'Regularly test your speed and accuracy, and watch your skills grow over time.',
   },
   {
-    icon: BarChart,
-    title: 'Progress Tracking',
-    description: 'Monitor your progress with our advanced analytics dashboard.',
+    icon: FileText,
+    title: 'Exam-oriented Tests',
+    description: 'Prepare for real-world exams with our specialized test modules and dictation practice.',
   },
   {
-    icon: UserCheck,
-    title: 'Admin Managed Lessons',
-    description: 'Curriculum and lessons curated by experienced administrators.',
+    icon: LayoutDashboard,
+    title: 'Simple Dashboard',
+    description: 'Track your progress and access all your courses and materials from one easy-to-use dashboard.',
   },
 ];
 
@@ -30,7 +30,7 @@ export function WhyChooseUs() {
         <div className="mx-auto max-w-3xl space-y-8">
             <div className="text-center">
                 <h2 className="font-sans text-3xl font-extrabold tracking-tight sm:text-4xl">
-                  Features for Your Success
+                  Why Choose Us
                 </h2>
                 <p className="mt-4 text-lg text-muted-foreground">
                   Everything you need to excel in one place.

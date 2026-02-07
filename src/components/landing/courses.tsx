@@ -19,7 +19,7 @@ export function Courses() {
     },
     {
       title: 'Stenography Course',
-      description: 'Master shorthand with our expert-led dictation practices and exam-focused materials.',
+      description: 'Master shorthand with our expert-led dictation practices and exam-focused materials. (Dictation practice)',
       icon: BookOpen,
       href: enrollPath('stenography')
     }

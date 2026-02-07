@@ -18,14 +18,14 @@ export function NewHero() {
               Typing Practice & Stenography Learning
             </p>
             <p className="text-base text-muted-foreground max-w-xl mx-auto md:mx-0 opacity-0 animate-fade-in-up animation-delay-400">
-              Learn typing, improve speed, take tests, and prepare for exams with structured lessons and dictation practice.
+              A professional platform for typing practice, shorthand dictation, speed tests, and exam preparation. Learn step-by-step with structured lessons and practice modules.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4 opacity-0 animate-fade-in-up animation-delay-500">
                 <Button asChild size="lg">
                     <Link href="/#courses">Enroll Now</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline">
-                    <Link href="/dashboard/tests">Free Demo Test</Link>
+                    <Link href="/dashboard/tests">Free Practice Test</Link>
                 </Button>
             </div>
           </div>
