@@ -41,27 +41,27 @@
 
 @layer base {
   :root {
-    --background: 255 100% 100%;
-    --foreground: 224 39% 12%;
-    --card: 0 0% 100%;
-    --card-foreground: 224 39% 12%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 224 39% 12%;
-    --primary: 173 58% 39%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 10% 35%;
-    --muted: 220 14% 96%;
-    --muted-foreground: 215 8% 47%;
-    --accent: 220 13% 91%;
-    --accent-foreground: 224 39% 12%;
+    --background: 137 67% 96%;
+    --foreground: 142 50% 8%;
+    --card: 137 67% 99%;
+    --card-foreground: 142 50% 8%;
+    --popover: 137 67% 99%;
+    --popover-foreground: 142 50% 8%;
+    --primary: 140 64% 30%;
+    --primary-foreground: 140 75% 96%;
+    --secondary: 140 20% 93%;
+    --secondary-foreground: 142 20% 25%;
+    --muted: 140 20% 93%;
+    --muted-foreground: 140 5% 45%;
+    --accent: 141 58% 42%;
+    --accent-foreground: 140 75% 96%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 13% 88%;
-    --input: 220 13% 88%;
-    --ring: 173 58% 39%;
-    --chart-1: 211 100% 50%;
-    --chart-2: 173 58% 39%;
+    --border: 140 40% 87%;
+    --input: 140 40% 87%;
+    --ring: 140 64% 30%;
+    --chart-1: 140 64% 30%;
+    --chart-2: 141 58% 42%;
     --chart-3: 0 72% 51%;
     --chart-4: 43 74% 66%;
     --chart-5: 210 40% 98%;
@@ -133,69 +133,4 @@
             scroll-behavior: auto !important;
         }
     }
-}
-
-.steno-hero-bg {
-  background-color: #e0f7fa; /* A light, minty cyan color */
-}
-
-
-.enrollment-bg {
-  background: linear-gradient(180deg, hsl(var(--secondary)) 0%, hsl(var(--background)) 100%);
-  overflow-x: hidden;
-}
-
-.step-item-container {
-  @apply relative flex flex-col items-center justify-between md:flex-row;
-}
-
-.step-item {
-  @apply relative flex flex-col items-center text-center w-full md:w-auto md:flex-1 py-8 md:py-0;
-}
-
-/* Connector lines for desktop */
-@media (min-width: 768px) {
-  .step-connector {
-    @apply absolute top-10 left-1/2 h-0.5 w-[calc(100%-10rem)] -translate-x-1/2;
-    background-color: hsl(var(--primary));
-    box-shadow: 0 0 8px hsl(var(--primary) / 0.7);
-    transform-origin: left;
-    animation: scale-in-x 1.5s 0.2s cubic-bezier(0.5, 1, 0.5, 1) forwards;
-    opacity: 0;
-  }
-}
-
-@keyframes scale-in-x {
-  from {
-    transform: scaleX(0) translateX(-50%);
-    opacity: 0;
-  }
-  to {
-    transform: scaleX(1) translateX(-50%);
-    opacity: 1;
-  }
-}
-
-/* Connector lines for mobile */
-@media (max-width: 767px) {
-  .step-connector-mobile {
-    @apply absolute left-1/2 top-20 w-0.5 -translate-x-1/2;
-    background-color: hsl(var(--primary));
-    box-shadow: 0 0 8px hsl(var(--primary) / 0.7);
-    transform-origin: top;
-    animation: scale-in-y 1.5s 0.2s cubic-bezier(0.5, 1, 0.5, 1) forwards;
-    opacity: 0;
-    height: calc(100% - 10rem);
-  }
-}
-
-@keyframes scale-in-y {
-  from {
-    transform: scaleY(0) translateX(-50%);
-    opacity: 0;
-  }
-  to {
-    transform: scaleY(1) translateX(-50%);
-    opacity: 1;
-  }
 }

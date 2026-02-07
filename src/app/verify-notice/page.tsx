@@ -80,7 +80,7 @@ export default function VerifyNoticePage() {
                 <Link href="/" className="mb-4 inline-flex items-center gap-2">
                     <SiteLogo className="h-8 w-8" />
                     <span className="text-2xl font-bold">
-                    Bharat Communication Center
+                      Bharat Communication Center
                     </span>
                 </Link>
                 </div>

@@ -13,7 +13,7 @@ export function Footer() {
               <SiteLogo className="h-8 w-8" />
               <span className="text-xl font-bold">Bharat Communication Center</span>
             </Link>
-            <p className="text-sm text-muted-foreground">Design and Communication Center</p>
+            <p className="text-sm text-muted-foreground">Your destination for typing and stenography excellence.</p>
           </div>
 
           <div className="space-y-4">

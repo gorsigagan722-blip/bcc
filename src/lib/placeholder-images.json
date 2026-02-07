@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-image",
-      "description": "Students learning on computers in a classroom setting",
-      "imageUrl": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=600&h=400&auto=format&fit=crop",
-      "imageHint": "students computers"
+      "description": "Students learning on laptops in a modern classroom setting",
+      "imageUrl": "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=600&h=400&auto=format&fit=crop",
+      "imageHint": "students laptops"
     },
     {
       "id": "dark-mode-bg",

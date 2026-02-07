@@ -3,37 +3,37 @@ import { BarChart, Goal, Sparkles, UserCheck } from 'lucide-react';
 const features = [
   {
     icon: Sparkles,
-    title: 'Daily Smart Practice',
+    title: 'Daily Practice',
     description: 'Engaging daily exercises tailored to improve your skills efficiently.',
   },
   {
-    icon: UserCheck,
-    title: 'Experienced Trainers',
-    description: 'Learn from industry experts with years of practical experience.',
-  },
-  {
     icon: Goal,
-    title: 'Exam-Oriented Learning',
-    description: 'Curriculum designed to help you excel in competitive exams.',
+    title: 'Speed Tests',
+    description: 'Regularly test your speed and accuracy to track improvement.',
   },
   {
     icon: BarChart,
-    title: 'Performance Tracking',
+    title: 'Progress Tracking',
     description: 'Monitor your progress with our advanced analytics dashboard.',
+  },
+  {
+    icon: UserCheck,
+    title: 'Admin Managed Lessons',
+    description: 'Curriculum and lessons curated by experienced administrators.',
   },
 ];
 
 export function WhyChooseUs() {
   return (
-    <section id="why-us" className="container mx-auto">
+    <section id="features" className="container mx-auto py-16 sm:py-24">
       <div className="grid grid-cols-1 items-center gap-12">
         <div className="mx-auto max-w-3xl space-y-8">
             <div className="text-center">
                 <h2 className="font-sans text-3xl font-extrabold tracking-tight sm:text-4xl">
-                Why Choose Us
+                  Features for Your Success
                 </h2>
                 <p className="mt-4 text-lg text-muted-foreground">
-                The best choice for your career growth.
+                  Everything you need to excel in one place.
                 </p>
             </div>
           {features.map((feature, index) => (

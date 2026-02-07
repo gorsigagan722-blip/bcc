@@ -8,8 +8,8 @@ import { FirebaseClientProvider } from '@/firebase';
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'Steno Career Hub',
-  description: 'Shorthand Dictation & Typing Platform',
+  title: 'Bharat Communication Center',
+  description: 'Typing Practice & Stenography Learning Platform',
 };
 
 export default function RootLayout({
