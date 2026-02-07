@@ -5,23 +5,23 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import Link from 'next/link';
 import { Keyboard, BookOpen } from 'lucide-react';
 import { useUser } from '@/firebase';
+import { Skeleton } from '../ui/skeleton';
 
 export function Courses() {
-  const { user } = useUser();
-  const enrollPath = (course: string) => user ? `/enroll/${course}`: '/signup';
+  const { user, isUserLoading } = useUser();
 
   const coursesData = [
     {
       title: 'Typing Course',
+      id: 'typing',
       description: 'Comprehensive lessons from beginner to advanced to boost your typing speed and accuracy. (Lessons 1-10)',
       icon: Keyboard,
-      href: enrollPath('typing')
     },
     {
       title: 'Stenography Course',
+      id: 'stenography',
       description: 'Master shorthand with our expert-led dictation practices and exam-focused materials. (Dictation practice)',
       icon: BookOpen,
-      href: enrollPath('stenography')
     }
   ];
 
@@ -45,7 +45,15 @@ export function Courses() {
                             <CardDescription>{course.description}</CardDescription>
                         </CardContent>
                         <CardFooter>
-                            <Button asChild><Link href={course.href}>Start Learning</Link></Button>
+                             {isUserLoading ? (
+                                <Skeleton className="h-10 w-32" />
+                            ) : (
+                                <Button asChild>
+                                    <Link href={user ? `/enroll/${course.id}` : '/signup'}>
+                                        Start Learning
+                                    </Link>
+                                </Button>
+                            )}
                         </CardFooter>
                     </Card>
                 ))}
