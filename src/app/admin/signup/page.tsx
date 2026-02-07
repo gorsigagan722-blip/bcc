@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -93,10 +92,7 @@ export default function AdminSignupPage() {
       <div className="w-full max-w-md space-y-6">
         <div className="text-center">
           <Link href="/" className="mb-4 inline-flex items-center gap-2">
-            <SiteLogo className="h-8 w-8" />
-            <span className="text-2xl font-bold">
-              Bharat Communication Center
-            </span>
+            <SiteLogo />
           </Link>
         </div>
         <Card>

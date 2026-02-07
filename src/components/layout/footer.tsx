@@ -18,8 +18,7 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2">
-              <SiteLogo className="h-8 w-8" />
-              <span className="text-xl font-bold text-primary">Bharat Communication Center</span>
+              <SiteLogo />
             </Link>
             <p className="text-sm text-muted-foreground">Your destination for typing and stenography excellence.</p>
           </div>

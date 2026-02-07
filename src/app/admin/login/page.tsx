@@ -84,10 +84,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md space-y-6">
         <div className="text-center">
           <Link href="/" className="inline-flex items-center gap-2 mb-4">
-            <SiteLogo className="h-8 w-8" />
-            <span className="text-2xl font-bold">
-              Bharat Communication Center
-            </span>
+            <SiteLogo />
           </Link>
         </div>
         <Card>
