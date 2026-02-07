@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -132,10 +131,12 @@ export default function LoginPage() {
                 Forgot Your Password?
               </Link>
             </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              LOGIN
-            </Button>
+            <div className="flex justify-center">
+              <Button type="submit" disabled={isLoading}>
+                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                LOGIN
+              </Button>
+            </div>
           </form>
           <div className="mt-4 text-center text-sm">
             <p className="text-muted-foreground mb-4">Stay Connected With Us</p>
