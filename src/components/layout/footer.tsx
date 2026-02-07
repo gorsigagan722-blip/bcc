@@ -6,10 +6,10 @@ import { SiteLogo } from '../site-logo';
 import { useEffect, useState } from 'react';
 
 export function Footer() {
-  const [year, setYear] = useState<number | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setYear(new Date().getFullYear());
+    setIsMounted(true);
   }, []);
 
   return (
@@ -47,7 +47,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {year || ' '} Bharat Communication Center. All rights reserved.</p>
+          <p>&copy; {isMounted ? new Date().getFullYear() : ' '} Bharat Communication Center. All rights reserved.</p>
         </div>
       </div>
     </footer>
