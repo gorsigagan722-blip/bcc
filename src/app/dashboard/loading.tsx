@@ -1,6 +1,6 @@
-import PageLoader from '@/components/ui/page-loader';
-
+// This file is intentionally left blank to disable the dashboard loading UI
+// and resolve a ChunkLoadError. The loading indicator feature can be
+// revisited later.
 export default function Loading() {
-  // You can add any UI inside Loading, including a Skeleton.
-  return <PageLoader />;
+  return null;
 }
