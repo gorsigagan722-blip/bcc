@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-image",
-      "description": "Vintage typewriter with a transparent background",
-      "imageUrl": "https://i.postimg.cc/VvwKRQNr/Whisk-8332559b4609630950c4fb98ea12c7a6dr-removebg-preview-(1).png",
-      "imageHint": "vintage typewriter"
+      "description": "Students learning on computers in a classroom setting",
+      "imageUrl": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=600&h=400&auto=format&fit=crop",
+      "imageHint": "students computers"
     },
     {
       "id": "dark-mode-bg",

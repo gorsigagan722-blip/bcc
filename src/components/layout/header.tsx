@@ -7,119 +7,74 @@ import {
   SheetContent,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Bell, Menu, LogOut, LayoutDashboard, Moon, Sun, User, Shield } from 'lucide-react';
-import { useUser, useAuth, useFirestore } from '@/firebase';
-import { signOut } from 'firebase/auth';
-import { useRouter, usePathname } from 'next/navigation';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { SiteLogo } from '../site-logo';
+import { Menu } from 'lucide-react';
+import { useUser } from '@/firebase';
+import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
-import { useTheme } from 'next-themes';
-import { doc, getDoc } from 'firebase/firestore';
 
-const navLinks = [
-  { href: '#home', label: 'Home' },
-  { href: '#courses', label: 'Courses' },
-  { href: '#why-us', label: 'Why Choose Us' },
-  { href: '#testimonials', label: 'Testimonials' },
-  { href: '#contact', label: 'Contact' },
-];
+const StenoCareerHubLogo = () => (
+  <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.location.href = '/'}>
+    <div className="relative h-9 w-9">
+      <div className="absolute inset-0 grid grid-cols-4 grid-rows-3 gap-0.5 p-1 bg-red-500 rounded-sm">
+        {[...Array(8)].map((_, i) => (
+          <div key={i} className="bg-white/70 rounded-sm"></div>
+        ))}
+        <div className="bg-white/70 rounded-sm col-span-2"></div>
+         <div className="bg-white/70 rounded-sm"></div>
+      </div>
+       <svg className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-9 h-9 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+      </svg>
+    </div>
+    <div className="flex flex-col leading-tight">
+      <span className="font-bold text-lg text-teal-600">STENO</span>
+      <span className="font-semibold text-xs text-red-500 tracking-wider">CAREER HUB</span>
+    </div>
+  </div>
+);
+
 
 export function Header() {
   const { user, isUserLoading } = useUser();
-  const auth = useAuth();
-  const firestore = useFirestore();
-  const router = useRouter();
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const { setTheme, theme } = useTheme();
-
-  const isHomePage = pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-
     window.addEventListener('scroll', handleScroll);
-    // Run on mount to set initial state
     handleScroll();
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const checkAdminRole = async () => {
-      if (user && firestore) {
-        const userDocRef = doc(firestore, 'users', user.uid);
-        try {
-          const userDoc = await getDoc(userDocRef);
-          if (userDoc.exists() && userDoc.data().role === 'admin') {
-            setIsAdmin(true);
-          } else {
-            setIsAdmin(false);
-          }
-        } catch (error) {
-          console.error("Error checking admin role:", error);
-          setIsAdmin(false);
-        }
-      } else {
-        setIsAdmin(false);
-      }
-    };
-    if (!isUserLoading) {
-      checkAdminRole();
-    }
-  }, [user, isUserLoading, firestore]);
+  const navLinks = user 
+    ? [
+        { href: '/hindi-steno-test', label: 'Hindi Steno Test' },
+        { href: '/english-steno-test', label: 'English Steno Test' },
+        { href: '/dashboard', label: 'Dashboard' },
+        { href: '/about-us', label: 'About us' },
+      ]
+    : [
+        { href: '/hindi-steno-test', label: 'Hindi Steno Test' },
+        { href: '/english-steno-test', label: 'English Steno Test' },
+        { href: '/signup', label: 'Register' },
+        { href: '/login', label: 'Login' },
+        { href: '/about-us', label: 'About us' },
+      ];
 
 
-  const handleSignOut = async () => {
-    try {
-      await signOut(auth);
-      router.push('/');
-    } catch (error) {
-      console.error('Error signing out: ', error);
-    }
-  };
-  
-  const getAvatarFallback = (email: string | null | undefined) => {
-    if (!email) return 'U';
-    return email.charAt(0).toUpperCase();
-  };
-
-  const useTransparentStyle = isHomePage && !isScrolled && theme === 'dark';
-
-  const NavLinks = ({...props}) => (
+  const NavLinks = ({ inSheet }: { inSheet?: boolean }) => (
     <>
       {navLinks.map((link) => (
         <Link
           key={link.href}
           href={link.href}
           className={cn(
-            "text-sm font-medium transition-colors px-3 py-2 rounded-md",
-            useTransparentStyle ? "text-white/80 hover:text-white" : "text-foreground hover:text-primary"
+            "text-sm font-medium transition-colors hover:text-primary",
+            inSheet ? "block py-2" : "px-3 py-2 rounded-md"
           )}
-          {...props}
         >
           {link.label}
         </Link>
@@ -130,237 +85,33 @@ export function Header() {
   return (
     <header
       className={cn(
-        `sticky top-0 z-50 w-full transition-colors duration-200`,
-        useTransparentStyle ? "bg-transparent" : "bg-background/90 backdrop-blur-sm border-b shadow-sm"
+        `sticky top-0 z-50 w-full transition-shadow duration-200`,
+        isScrolled ? "bg-white shadow-md" : "bg-white"
       )}
     >
       <div className="container mx-auto flex h-16 max-w-screen-xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2">
-          <SiteLogo className="h-6 w-6" />
-          <span className={cn("font-bold", useTransparentStyle ? "text-white" : "text-foreground")}>Bharat Communication Center</span>
-        </Link>
+        <StenoCareerHubLogo />
+        
         <nav className="hidden items-center gap-1 md:flex">
-          {isHomePage ? <NavLinks /> : null}
+          <NavLinks />
         </nav>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-            className={cn("h-9 w-9", useTransparentStyle ? 'text-white hover:bg-white/10 hover:text-white' : '')}
-          >
-            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
-          </Button>
-          
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className={cn("h-9 w-9", useTransparentStyle ? 'text-white hover:bg-white/10 hover:text-white' : '')}>
-                <Bell className="h-4 w-4" />
-                <span className="sr-only">Notifications</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-80">
-                <DropdownMenuLabel>Notifications</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <div className="p-2">
-                    <div className="flex items-start p-2 rounded-lg hover:bg-accent">
-                        <div className="ml-3">
-                            <p className="text-sm font-medium">New course available!</p>
-                            <p className="text-xs text-muted-foreground">Advanced Stenography has been added.</p>
-                        </div>
-                    </div>
-                    <div className="flex items-start p-2 rounded-lg hover:bg-accent">
-                        <div className="ml-3">
-                            <p className="text-sm font-medium">Profile Update</p>
-                            <p className="text-xs text-muted-foreground">Your profile was successfully updated.</p>
-                        </div>
-                    </div>
-                </div>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="justify-center">
-                    View all notifications
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
 
-          {isUserLoading ? (
-             <div className="h-9 w-9 animate-pulse rounded-full bg-muted/20 hidden md:flex"></div>
-          ) : user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-9 w-9 rounded-full">
-                  <Avatar className="h-9 w-9">
-                    <AvatarImage src={user.photoURL || ''} alt={user.displayName || 'user'} />
-                    <AvatarFallback>{getAvatarFallback(user.email)}</AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 dark:bg-card/70 dark:backdrop-blur-md dark:border-white/10" align="end" forceMount>
-                <DropdownMenuLabel className="font-normal">
-                  <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium leading-none">{user.displayName}</p>
-                    <p className="text-xs leading-none text-muted-foreground">
-                      {user.email}
-                    </p>
-                  </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href={isAdmin ? "/admin/dashboard" : "/dashboard"}><LayoutDashboard className="mr-2"/>Dashboard</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
-                  {theme === 'light' ? <Moon className="mr-2"/> : <Sun className="mr-2"/>}
-                  <span>{theme === 'light' ? 'Dark' : 'Light'} Mode</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleSignOut}>
-                  <LogOut className="mr-2"/>
-                  Sign Out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <div className="hidden items-center gap-2 md:flex">
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <Button 
-                            variant="outline" 
-                            size="sm"
-                            className={cn(
-                                useTransparentStyle 
-                                ? 'text-white border-white/20 hover:bg-white/10 hover:text-white' 
-                                : ''
-                            )}
-                        >
-                            Login
-                        </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
-                        <DialogHeader>
-                            <DialogTitle>Login As</DialogTitle>
-                            <DialogDescription>
-                                Choose your role to proceed to the login page.
-                            </DialogDescription>
-                        </DialogHeader>
-                        <div className="grid grid-cols-2 gap-4 py-4">
-                            <Button variant="outline" asChild>
-                                <Link href="/login"><User className="mr-2 h-4 w-4"/> Student</Link>
-                            </Button>
-                            <Button variant="outline" asChild>
-                                <Link href="/admin/login"><Shield className="mr-2 h-4 w-4"/> Admin</Link>
-                            </Button>
-                        </div>
-                    </DialogContent>
-                </Dialog>
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <Button 
-                            size="sm"
-                            className={cn(
-                                useTransparentStyle 
-                                ? 'bg-white/10 text-white hover:bg-white/20 border border-white/20' 
-                                : ''
-                            )}
-                        >
-                            Sign Up
-                        </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
-                        <DialogHeader>
-                            <DialogTitle>Sign Up As</DialogTitle>
-                            <DialogDescription>
-                                Choose your role to proceed to the sign-up page.
-                            </DialogDescription>
-                        </DialogHeader>
-                        <div className="grid grid-cols-2 gap-4 py-4">
-                            <Button variant="outline" asChild>
-                                <Link href="/signup"><User className="mr-2 h-4 w-4"/> Student</Link>
-                            </Button>
-                            <Button variant="outline" asChild>
-                                <Link href="/admin/signup"><Shield className="mr-2 h-4 w-4"/> Admin</Link>
-                            </Button>
-                        </div>
-                    </DialogContent>
-                </Dialog>
-            </div>
-          )}
-
-
+        <div className="flex items-center gap-2 md:hidden">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon" className={cn("md:hidden h-9 w-9", useTransparentStyle ? 'bg-transparent border-white/20 text-white hover:bg-white/10 hover:text-white' : '')}>
+              <Button variant="outline" size="icon" className="h-9 w-9">
                 <Menu className="h-4 w-4" />
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-full bg-card">
+            <SheetContent side="right" className="w-full bg-white">
               <div className="flex h-full flex-col p-6">
-                <Link href="/" className="mb-8 flex items-center gap-2">
-                  <SiteLogo className="h-6 w-6" />
-                  <span className="font-bold">Bharat Communication Center</span>
-                </Link>
-                <nav className="flex flex-col gap-6">
-                  {isHomePage ? <NavLinks onClick={() => (document.querySelector('[data-radix-dialog-close]') as HTMLElement)?.click()} /> : null}
-                </nav>
-                <div className="mt-auto space-y-2">
-                  {user ? (
-                    <>
-                      <Button asChild className="w-full">
-                        <Link href={isAdmin ? "/admin/dashboard" : "/dashboard"}>Dashboard</Link>
-                      </Button>
-                      <Button variant="outline" onClick={handleSignOut} className="w-full">
-                        Sign Out
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Button className='w-full'>Sign Up</Button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]">
-                          <DialogHeader>
-                            <DialogTitle>Sign Up As</DialogTitle>
-                            <DialogDescription>
-                                Choose your role to proceed to the sign-up page.
-                            </DialogDescription>
-                          </DialogHeader>
-                          <div className="grid grid-cols-2 gap-4 py-4">
-                            <Button variant="outline" asChild>
-                              <Link href="/signup"><User className="mr-2 h-4 w-4"/> Student</Link>
-                            </Button>
-                            <Button variant="outline" asChild>
-                              <Link href="/admin/signup"><Shield className="mr-2 h-4 w-4"/> Admin</Link>
-                            </Button>
-                          </div>
-                        </DialogContent>
-                      </Dialog>
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Button variant="outline" className='w-full'>Login</Button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]">
-                          <DialogHeader>
-                            <DialogTitle>Login As</DialogTitle>
-                            <DialogDescription>
-                                Choose your role to proceed to the login page.
-                            </DialogDescription>
-                          </DialogHeader>
-                          <div className="grid grid-cols-2 gap-4 py-4">
-                            <Button variant="outline" asChild>
-                              <Link href="/login"><User className="mr-2 h-4 w-4"/> Student</Link>
-                            </Button>
-                            <Button variant="outline" asChild>
-                              <Link href="/admin/login"><Shield className="mr-2 h-4 w-4"/> Admin</Link>
-                            </Button>
-                          </div>
-                        </DialogContent>
-                      </Dialog>
-                    </>
-                  )}
+                <div className="mb-8">
+                  <StenoCareerHubLogo />
                 </div>
+                <nav className="flex flex-col gap-4">
+                  <NavLinks inSheet />
+                </nav>
               </div>
             </SheetContent>
           </Sheet>

@@ -8,7 +8,7 @@ import { AddReview } from '@/components/landing/add-review';
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-background dark:bg-[#04031F]">
+    <div className="flex min-h-screen flex-col bg-background">
       <Header />
       <main className="flex-1">
         <NewHero />

@@ -15,15 +15,6 @@
   }
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
 @keyframes slow-rotate {
   from {
     transform: rotate(0deg);
@@ -50,13 +41,13 @@
 
 @layer base {
   :root {
-    --background: 210 17% 98%;
+    --background: 255 100% 100%;
     --foreground: 224 39% 12%;
     --card: 0 0% 100%;
     --card-foreground: 224 39% 12%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 39% 12%;
-    --primary: 221 83% 53%;
+    --primary: 173 58% 39%;
     --primary-foreground: 210 40% 98%;
     --secondary: 220 14% 96%;
     --secondary-foreground: 220 10% 35%;
@@ -68,7 +59,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 220 13% 88%;
     --input: 220 13% 88%;
-    --ring: 221 83% 53%;
+    --ring: 173 58% 39%;
     --chart-1: 211 100% 50%;
     --chart-2: 173 58% 39%;
     --chart-3: 0 72% 51%;
@@ -84,44 +75,8 @@
     --sidebar-border: 220 13% 88%;
     --sidebar-ring: 211 100% 50%;
   }
-  .dark {
-    /* Student Dashboard Theme (calm, motivating) */
-    --background: 224 43% 11%; /* #0F172A */
-    --foreground: 215 14% 90%; /* #E5E7EB */
-    --card: 215 39% 23%; /* #1E293B */
-    --card-foreground: 215 14% 90%;
-    --popover: 215 39% 23%;
-    --popover-foreground: 215 14% 90%;
-    --primary: 217 91% 60%; /* #3B82F6 */
-    --primary-foreground: 210 20% 98%;
-    --secondary: 215 28% 17%;
-    --secondary-foreground: 210 20% 90%;
-    --muted: 215 28% 17%;
-    --muted-foreground: 215 10% 65%; /* #9CA3AF */
-    --accent: 217 30% 30%;
-    --accent-foreground: 215 14% 90%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 215 25% 27%;
-    --input: 215 25% 27%;
-    --ring: 217 91% 60%;
-    --chart-1: 222 83% 53%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 0 72% 51%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 210 40% 98%;
-    --sidebar-background: 215 39% 23%;
-    --sidebar-foreground: 215 14% 90%;
-    --sidebar-primary: 217 91% 60%;
-    --sidebar-primary-foreground: 210 20% 98%;
-    --sidebar-accent: 217 30% 30%;
-    --sidebar-accent-foreground: 215 14% 90%;
-    --sidebar-border: 215 25% 27%;
-    --sidebar-ring: 217 91% 60%;
-  }
 
-  /* Admin Dashboard Theme (powerful, premium) */
-  .dark .admin-dashboard-theme {
+  .admin-dashboard-theme {
     --background: 227 58% 8%; /* #0B1020 */
     --foreground: 220 14% 96%;
     --card: 222 47% 11%; /* #111827 */
@@ -161,9 +116,6 @@
     .animate-fade-in-up {
         animation: fade-in-up 0.7s ease-out forwards;
     }
-    .animate-float {
-        animation: float 6s ease-in-out infinite;
-    }
     .animation-delay-100 { animation-delay: 100ms; }
     .animation-delay-200 { animation-delay: 200ms; }
     .animation-delay-300 { animation-delay: 300ms; }
@@ -180,77 +132,17 @@
             transition-duration: 0.01ms !important;
             scroll-behavior: auto !important;
         }
-        .animate-float {
-            animation: none;
-        }
     }
 }
 
-.hero-section {
-  position: relative;
-  overflow: hidden;
-  /* Light mode styles */
-  background: linear-gradient(180deg, #87CEEB 0%, #f0f9ff 100%);
-}
-
-.hero-section-particles::before {
-  display: none;
-}
-
-.dark .hero-section {
-  background: radial-gradient(
-      circle at 50% 50%,
-      #04031f 0%,
-      #090940 35%,
-      #091559 100%
-    );
-}
-
-.dark .hero-section::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-  background-position: center;
-  background-size: cover;
-  opacity: 0.15;
-  filter: blur(2px);
-  z-index: 0;
-  animation: fade-in-soft 1.5s ease-out forwards;
-}
-
-.dark .hero-section-particles::before {
-  display: block;
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 150%;
-  height: 150%;
-  transform: translate(-50%, -50%);
-  background-image: radial-gradient(
-      circle,
-      rgba(255, 255, 255, 0.1) 1px,
-      transparent 1px
-    ),
-    radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 40px 40px, 80px 80px;
-  animation: particle-animation 40s linear infinite, twinkle 8s ease-in-out infinite;
-  will-change: transform, opacity;
-  z-index: 1;
+.steno-hero-bg {
+  background-color: #e0f7fa; /* A light, minty cyan color */
 }
 
 
 .enrollment-bg {
   background: linear-gradient(180deg, hsl(var(--secondary)) 0%, hsl(var(--background)) 100%);
   overflow-x: hidden;
-}
-
-.dark .enrollment-bg {
-  background: radial-gradient(ellipse at bottom, #090940 0%, #04031f 100%);
 }
 
 .step-item-container {
@@ -306,37 +198,4 @@
     transform: scaleY(1) translateX(-50%);
     opacity: 1;
   }
-}
-
-/* Light mode laptop background */
-.light .light-mode-bg-container {
-  position: relative;
-  z-index: 1;
-}
-
-.light .light-mode-bg-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-  background-position: center;
-  background-size: cover;
-  opacity: 0.15;
-  filter: blur(3px);
-  z-index: -1;
-}
-
-.light .light-mode-bg-container::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #FFFFFF;
-  opacity: 0.1;
-  z-index: -1;
 }
