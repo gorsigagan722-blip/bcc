@@ -1,20 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Loader2 } from 'lucide-react';
+import { Loader2, User, Mail, Phone, Lock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import {
   createUserWithEmailAndPassword,
@@ -24,34 +14,32 @@ import {
 import { doc } from 'firebase/firestore';
 import { useFirestore, useAuth } from '@/firebase';
 import { setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
-import { SiteLogo } from '@/components/site-logo';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export default function SignupPage() {
-  const [isCaptchaChecked, setIsCaptchaChecked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const firestore = useFirestore();
   const auth = useAuth();
   const router = useRouter();
+  const signupBgImage = PlaceHolderImages.find((img) => img.id === 'signup-bg');
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!isCaptchaChecked) {
-      toast({
-        variant: 'destructive',
-        title: 'Captcha Required',
-        description: 'Please verify you are not a robot.',
-      });
-      return;
-    }
     setIsLoading(true);
 
     const formData = new FormData(e.currentTarget);
-    const firstName = formData.get('first-name') as string;
-    const lastName = formData.get('last-name') as string;
+    const name = formData.get('name') as string;
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
-    const displayName = `${firstName} ${lastName}`;
+    
+    // Split name into first and last for Firestore
+    const nameParts = name.trim().split(/\s+/);
+    const firstName = nameParts.shift() || '';
+    const lastName = nameParts.join(' ');
+    const displayName = name;
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -99,107 +87,79 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
-      <div className="w-full max-w-md space-y-6">
-        <div className="text-center">
-          <Link href="/" className="mb-4 inline-flex items-center gap-2">
-            <SiteLogo className="h-8 w-8" />
-            <span className="text-2xl font-bold">
-              Bharat Communication Center
-            </span>
-          </Link>
-        </div>
-        <Card>
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Create an Account</CardTitle>
-            <CardDescription>
-              Enroll now to start your learning journey.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="first-name">First Name</Label>
-                  <Input
-                    id="first-name"
-                    name="first-name"
-                    type="text"
-                    placeholder="John"
-                    required
-                    disabled={isLoading}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="last-name">Last Name</Label>
-                  <Input
-                    id="last-name"
-                    name="last-name"
-                    type="text"
-                    placeholder="Doe"
-                    required
-                    disabled={isLoading}
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  required
-                  disabled={isLoading}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  disabled={isLoading}
-                />
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="captcha"
-                  onCheckedChange={(checked) => setIsCaptchaChecked(!!checked)}
-                  disabled={isLoading}
-                />
-                <label
-                  htmlFor="captcha"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  I am not a robot
-                </label>
-              </div>
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={!isCaptchaChecked || isLoading}
-              >
-                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Create Account
-              </Button>
-            </form>
-            <div className="mt-4 text-center text-sm">
-              Already have an account?{' '}
-              <Link
-                href="/login"
-                className={
-                  isLoading
-                    ? 'pointer-events-none text-muted-foreground'
-                    : 'underline hover:text-primary'
-                }
-              >
-                Login
-              </Link>
+    <div className="min-h-screen w-full lg:grid lg:grid-cols-2">
+      <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex">
+        {signupBgImage && (
+          <Image
+            src={signupBgImage.imageUrl}
+            alt={signupBgImage.description}
+            data-ai-hint={signupBgImage.imageHint}
+            fill
+            className="object-cover"
+            priority
+          />
+        )}
+      </div>
+      <div className="flex items-center justify-center py-12">
+        <div className="mx-auto grid w-[400px] gap-8">
+          <h1 className="text-3xl font-bold text-center">REGISTER</h1>
+          <form onSubmit={handleSubmit} className="grid gap-6">
+             <div className="relative">
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="Name"
+                required
+                className="pl-10"
+                disabled={isLoading}
+              />
             </div>
-          </CardContent>
-        </Card>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Email"
+                required
+                className="pl-10"
+                disabled={isLoading}
+              />
+            </div>
+             <div className="relative">
+              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="phone"
+                name="phone"
+                type="tel"
+                placeholder="Phone"
+                required
+                className="pl-10"
+                disabled={isLoading}
+              />
+            </div>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Password"
+                required
+                className="pl-10"
+                disabled={isLoading}
+              />
+            </div>
+            <div className="flex justify-center">
+              <Button type="submit" disabled={isLoading} className="bg-[#1b806a] text-primary-foreground hover:bg-[#2FAE5A]">
+                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                CREATE AN ACCOUNT
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
