@@ -3,13 +3,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
-const YouTubeIcon = () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="mr-2">
-        <path d="M21.582,6.186c-0.23-0.86-0.908-1.538-1.768-1.768C18.267,4,12,4,12,4S5.733,4,4.186,4.418 c-0.86,0.23-1.538,0.908-1.768,1.768C2,7.733,2,12,2,12s0,4.267,0.418,5.814c0.23,0.86,0.908,1.538,1.768,1.768 C5.733,20,12,20,12,20s6.267,0,7.814-0.418c0.861-0.23,1.538-0.908,1.768-1.768C22,16.267,22,12,22,12S22,7.733,21.582,6.186z M10,15.464V8.536L16,12L10,15.464z"></path>
-    </svg>
-);
-
-
 export function NewHero() {
   const heroImage = PlaceHolderImages.find((img) => img.id === 'hero-image');
   
@@ -51,12 +44,6 @@ export function NewHero() {
                     />
                 </div>
             )}
-             <Button asChild className="absolute top-6 right-6 bg-primary hover:bg-accent text-primary-foreground shadow-lg transition-transform hover:scale-105">
-              <Link href="#">
-                <YouTubeIcon />
-                Visit YouTube Channel
-              </Link>
-            </Button>
           </div>
         </div>
       </div>
