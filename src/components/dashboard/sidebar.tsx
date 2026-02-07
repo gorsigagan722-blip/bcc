@@ -32,7 +32,7 @@ export function Sidebar() {
   return (
     <div className="flex h-full flex-col bg-primary text-primary-foreground">
         <nav className="flex-1 space-y-1 p-2">
-            <Link href="/dashboard" className={cn("flex items-center gap-3 rounded-md px-3 py-3 text-sm font-medium", pathname === '/dashboard' ? 'bg-primary/80' : 'hover:bg-primary/90')}>
+            <Link href="/" className={cn("flex items-center gap-3 rounded-md px-3 py-3 text-sm font-medium", pathname === '/dashboard' ? 'bg-primary/80' : 'hover:bg-primary/90')}>
                 <Home className="h-5 w-5"/>
                 <span>Home</span>
             </Link>
