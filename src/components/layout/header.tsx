@@ -1,125 +1,112 @@
 'use client';
 
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { Phone, Clock, Mail, User, UserPlus, ChevronDown, Menu } from 'lucide-react';
+import React from 'react';
 import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from '@/components/ui/sheet';
-import { Menu } from 'lucide-react';
-import { useUser, useFirestore } from '@/firebase';
-import { useState, useEffect } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
-import { cn } from '@/lib/utils';
-import { SiteLogo } from '../site-logo';
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+    Sheet,
+    SheetContent,
+    SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button } from '@/components/ui/button';
 
-const BrandLogo = () => (
-    <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.location.href = '/'}>
-      <SiteLogo className="h-8 w-8" />
-      <span className="font-bold text-lg text-foreground hidden sm:inline-block">
-        BHARAT COMMUNICATION CENTER
-      </span>
-    </div>
-  );
+const NavItems = ({ onLinkClick }: { onLinkClick?: () => void }) => {
+    return (
+        <>
+            <Link href="/" className="font-semibold text-gray-700 hover:text-blue-600 transition-colors" onClick={onLinkClick}>HOME</Link>
+            <Link href="/about-us" className="font-semibold text-gray-700 hover:text-blue-600 transition-colors" onClick={onLinkClick}>ABOUT US</Link>
+            <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1 font-semibold text-gray-700 hover:text-blue-600 focus:outline-none">
+                    COURSE <ChevronDown className="h-4 w-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    <DropdownMenuItem asChild>
+                        <Link href="/enroll/typing">Typing Course</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                        <Link href="/enroll/stenography">Stenography Course</Link>
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+            <Link href="/#contact" className="font-semibold text-gray-700 hover:text-blue-600 transition-colors" onClick={onLinkClick}>CONTACT US</Link>
+        </>
+    );
+}
+
+const AuthNavItems = ({ onLinkClick }: { onLinkClick?: () => void }) => (
+    <>
+        <Link href="/login" className="flex items-center gap-2 font-semibold text-gray-700 hover:text-blue-600 transition-colors" onClick={onLinkClick}>
+            <User className="h-4 w-4 text-blue-600" />
+            LOG IN
+        </Link>
+        <Link href="/signup" className="flex items-center gap-2 font-semibold text-gray-700 hover:text-blue-600 transition-colors" onClick={onLinkClick}>
+            <UserPlus className="h-4 w-4 text-blue-600" />
+            NEW USER? SIGN UP
+        </Link>
+    </>
+)
 
 
 export function Header() {
-  const { user, isUserLoading } = useUser();
-  const firestore = useFirestore();
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    if (user && firestore) {
-        const checkAdmin = async () => {
-            const userDoc = await getDoc(doc(firestore, 'users', user.uid));
-            if (userDoc.exists() && userDoc.data().role === 'admin') {
-                setIsAdmin(true);
-            }
-        };
-        checkAdmin();
-    } else {
-        setIsAdmin(false);
-    }
-  }, [user, firestore]);
-
-  const dashboardHref = isAdmin ? '/admin/dashboard' : '/dashboard';
-
-  const navLinks = [
-    { href: '/dashboard/tests', label: 'Hindi Steno Test' },
-    { href: '/dashboard/tests', label: 'English Steno Test' },
-    ...(!user && !isUserLoading ? [
-        { href: '/signup', label: 'Register' },
-        { href: '/login', label: 'Login' }
-    ] : []),
-    ...(user && !isUserLoading ? [
-        { href: dashboardHref, label: 'Dashboard' }
-    ] : []),
-    { href: '#', label: 'About us' },
-];
-
-  const NavLinks = ({ inSheet }: { inSheet?: boolean }) => (
-    <>
-      {navLinks.map((link) => (
-        <Link
-          key={link.label + link.href}
-          href={link.href}
-          className={cn(
-            "text-sm font-medium transition-colors text-foreground/80 hover:text-primary",
-            inSheet ? "block py-2 text-lg" : "px-3 py-2"
-          )}
-        >
-          <span>{link.label}</span>
-        </Link>
-      ))}
-    </>
-  );
-
-  return (
-    <header
-      className={cn(
-        `sticky top-0 z-50 w-full bg-white transition-shadow duration-200`,
-        isScrolled ? "shadow-md" : ""
-      )}
-    >
-      <div className="container mx-auto flex h-16 max-w-screen-xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <BrandLogo />
-        
-        <nav className="hidden items-center gap-1 md:flex">
-          <NavLinks />
-        </nav>
-
-        <div className="flex items-center gap-2 md:hidden">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon" className="h-9 w-9">
-                <Menu className="h-4 w-4" />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-full bg-white">
-              <div className="flex h-full flex-col p-6">
-                <div className="mb-8">
-                  <BrandLogo />
+    const [isSheetOpen, setIsSheetOpen] = React.useState(false);
+    
+    return (
+        <div className="bg-white shadow-sm sticky top-0 z-50">
+            {/* Top Bar */}
+            <div className="py-2 border-b">
+                <div className="container mx-auto flex flex-wrap justify-center sm:justify-end items-center gap-4 sm:gap-6 text-sm text-blue-700">
+                    <a href="tel:+919671126006" className="flex items-center gap-2 hover:text-blue-900 transition-colors">
+                        <Phone className="h-4 w-4" />
+                        <span>+91-9671126006</span>
+                    </a>
+                    <div className="flex items-center gap-2">
+                        <Clock className="h-4 w-4" />
+                        <span>8am to 9pm</span>
+                    </div>
+                    <a href="mailto:gagangorsi251@gmail.com" className="flex items-center gap-2 hover:text-blue-900 transition-colors">
+                        <Mail className="h-4 w-4" />
+                        <span>gagangorsi251@gmail.com</span>
+                    </a>
                 </div>
-                <nav className="flex flex-col gap-4">
-                  <NavLinks inSheet />
+            </div>
+
+            {/* Main Navigation */}
+            <header className="container mx-auto flex justify-between items-center h-16">
+                <nav className="hidden md:flex items-center gap-4 text-sm">
+                    <NavItems />
                 </nav>
-              </div>
-            </SheetContent>
-          </Sheet>
+
+                <nav className="hidden md:flex items-center gap-4 text-sm">
+                    <AuthNavItems />
+                </nav>
+
+                <div className="md:hidden flex w-full justify-between">
+                     <Link href="/" className="text-lg font-bold text-gray-800">
+                        BCC
+                    </Link>
+                     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+                        <SheetTrigger asChild>
+                            <Button variant="outline" size="icon">
+                                <Menu className="h-6 w-6" />
+                            </Button>
+                        </SheetTrigger>
+                        <SheetContent>
+                             <nav className="flex flex-col gap-6 pt-8 text-base">
+                                <NavItems onLinkClick={() => setIsSheetOpen(false)} />
+                                <div className="border-t pt-6 flex flex-col gap-6">
+                                     <AuthNavItems onLinkClick={() => setIsSheetOpen(false)} />
+                                </div>
+                            </nav>
+                        </SheetContent>
+                    </Sheet>
+                </div>
+            </header>
         </div>
-      </div>
-    </header>
-  );
+    );
 }

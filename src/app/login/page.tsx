@@ -80,7 +80,7 @@ export default function LoginPage() {
         )}
       </div>
       <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-[350px] gap-6">
+        <div className="mx-auto grid w-[400px] gap-6">
           <div className="flex items-center justify-end">
             <Button variant="outline" asChild>
               <Link href="/dashboard">Dashboard</Link>
