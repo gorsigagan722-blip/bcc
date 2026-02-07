@@ -34,7 +34,7 @@ export function NewHero() {
                   alt={heroImage.description}
                   width={600}
                   height={600}
-                  className="object-contain animate-float"
+                  className="object-contain"
                   priority
                   data-ai-hint={heroImage.imageHint}
                 />
