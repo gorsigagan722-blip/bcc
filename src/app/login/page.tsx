@@ -12,9 +12,6 @@ import {
   Loader2,
   Phone,
   Lock,
-  Send,
-  Youtube,
-  MessageCircle,
 } from 'lucide-react';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
@@ -68,13 +65,6 @@ export default function LoginPage() {
     }
   };
 
-  const socialLinks = [
-    { icon: Phone, href: '#' },
-    { icon: Send, href: '#' },
-    { icon: Youtube, href: '#' },
-    { icon: MessageCircle, href: '#' },
-  ];
-
   return (
     <div className="min-h-screen w-full lg:grid lg:grid-cols-2">
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex">
@@ -91,12 +81,12 @@ export default function LoginPage() {
       </div>
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-end">
             <Button variant="outline" asChild>
               <Link href="/dashboard">Dashboard</Link>
             </Button>
-            <h1 className="text-3xl font-bold">LOGIN</h1>
           </div>
+          <h1 className="text-3xl font-bold text-center -mt-4">LOGIN</h1>
           <form onSubmit={handleSubmit} className="grid gap-4">
             <div className="relative">
               <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -132,26 +122,12 @@ export default function LoginPage() {
               </Link>
             </div>
             <div className="flex justify-center">
-              <Button type="submit" disabled={isLoading}>
+              <Button type="submit" disabled={isLoading} className="bg-primary text-primary-foreground hover:bg-red-500 active:bg-red-600">
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 LOGIN
               </Button>
             </div>
           </form>
-          <div className="mt-4 text-center text-sm">
-            <p className="text-muted-foreground mb-4">Stay Connected With Us</p>
-            <div className="flex items-center justify-center gap-4">
-              {socialLinks.map((social, index) => (
-                <Link
-                  href={social.href}
-                  key={index}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white transition-transform hover:scale-110"
-                >
-                  <social.icon className="h-5 w-5" />
-                </Link>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </div>
