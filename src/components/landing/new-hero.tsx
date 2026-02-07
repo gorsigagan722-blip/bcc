@@ -1,5 +1,3 @@
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
@@ -11,23 +9,15 @@ export function NewHero() {
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6 text-center md:text-left">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight opacity-0 animate-fade-in-up">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-primary tracking-tight opacity-0 animate-fade-in-up">
               Bharat Communication Center
             </h1>
-            <p className="text-xl md:text-2xl font-semibold text-primary opacity-0 animate-fade-in-up animation-delay-200">
-              Typing Practice & Stenography Learning
+            <p className="text-xl md:text-2xl font-semibold text-foreground opacity-0 animate-fade-in-up animation-delay-200">
+              Shorthand Dictation & Typing
             </p>
             <p className="text-base text-muted-foreground max-w-xl mx-auto md:mx-0 opacity-0 animate-fade-in-up animation-delay-400">
-              A professional platform for typing practice, shorthand dictation, speed tests, and exam preparation. Learn step-by-step with structured lessons and practice modules.
+              A Shorthand Learning and dictation platform.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4 opacity-0 animate-fade-in-up animation-delay-500">
-                <Button asChild size="lg">
-                    <Link href="/#courses">Enroll Now</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline">
-                    <Link href="/dashboard/tests">Free Practice Test</Link>
-                </Button>
-            </div>
           </div>
           
           <div className="relative opacity-0 animate-fade-in-up animation-delay-500">

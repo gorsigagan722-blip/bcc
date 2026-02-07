@@ -56,9 +56,6 @@ export function Header() {
   const dashboardHref = isAdmin ? '/admin/dashboard' : '/dashboard';
 
   const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/#courses', label: 'Typing Course' },
-    { href: '/#courses', label: 'Stenography Course' },
     { href: '/dashboard/tests', label: 'Hindi Steno Test' },
     { href: '/dashboard/tests', label: 'English Steno Test' },
     ...(!user && !isUserLoading ? [
@@ -68,7 +65,7 @@ export function Header() {
     ...(user && !isUserLoading ? [
         { href: dashboardHref, label: 'Dashboard' }
     ] : []),
-    { href: '#', label: 'About Us' },
+    { href: '#', label: 'About us' },
 ];
 
   const NavLinks = ({ inSheet }: { inSheet?: boolean }) => (
@@ -78,12 +75,11 @@ export function Header() {
           key={link.label + link.href}
           href={link.href}
           className={cn(
-            "text-sm font-medium transition-colors text-foreground/80 hover:text-primary hover:font-semibold relative group",
+            "text-sm font-medium transition-colors text-foreground/80 hover:text-primary",
             inSheet ? "block py-2 text-lg" : "px-3 py-2"
           )}
         >
           <span>{link.label}</span>
-          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
         </Link>
       ))}
     </>
@@ -92,8 +88,8 @@ export function Header() {
   return (
     <header
       className={cn(
-        `sticky top-0 z-50 w-full transition-shadow duration-200`,
-        isScrolled ? "bg-background/80 shadow-md backdrop-blur-sm" : "bg-background"
+        `sticky top-0 z-50 w-full bg-white transition-shadow duration-200`,
+        isScrolled ? "shadow-md" : ""
       )}
     >
       <div className="container mx-auto flex h-16 max-w-screen-xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -111,7 +107,7 @@ export function Header() {
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-full bg-background">
+            <SheetContent side="right" className="w-full bg-white">
               <div className="flex h-full flex-col p-6">
                 <div className="mb-8">
                   <BrandLogo />
