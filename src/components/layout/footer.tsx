@@ -11,13 +11,13 @@ export function Footer() {
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2">
               <SiteLogo className="h-8 w-8" />
-              <span className="text-xl font-bold">Bharat Communication Center</span>
+              <span className="text-xl font-bold text-primary">Bharat Communication Center</span>
             </Link>
             <p className="text-sm text-muted-foreground">Your destination for typing and stenography excellence.</p>
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Contact Us</h3>
+            <h3 className="text-lg font-semibold text-primary">Contact Us</h3>
             <div className="space-y-2 text-sm text-muted-foreground">
               <a href="tel:+911234567890" className="flex items-center gap-2 hover:text-primary">
                 <Phone className="h-4 w-4" />
@@ -31,7 +31,7 @@ export function Footer() {
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Legal</h3>
+            <h3 className="text-lg font-semibold text-primary">Legal</h3>
             <div className="flex flex-col space-y-2 text-sm">
                 <Link href="/privacy-policy" className="text-muted-foreground hover:text-primary">Privacy Policy</Link>
                 <Link href="/terms-of-service" className="text-muted-foreground hover:text-primary">Terms of Service</Link>
