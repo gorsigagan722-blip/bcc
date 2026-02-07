@@ -13,6 +13,7 @@ import {
 import { useUser } from '@/firebase';
 import { LayoutDashboard } from 'lucide-react';
 import { Skeleton } from '../ui/skeleton';
+import { useState, useEffect } from 'react';
 
 const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -35,17 +36,25 @@ const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export function LoginCard() {
   const { user, isUserLoading } = useUser();
+  const [isClient, setIsClient] = useState(false);
 
-  if (isUserLoading) {
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient || isUserLoading) {
     return (
       <Card className="w-full max-w-sm bg-card/70 backdrop-blur-sm">
         <CardHeader className="text-center">
           <Skeleton className="h-7 w-2/3 mx-auto" />
-          <Skeleton className="h-4 w-1/3 mx-auto" />
+          <Skeleton className="h-4 w-1/3 mx-auto mt-2" />
         </CardHeader>
         <CardContent className="grid gap-4">
           <Skeleton className="h-10 w-full" />
         </CardContent>
+        <CardFooter>
+          <Skeleton className="h-10 w-full" />
+        </CardFooter>
       </Card>
     );
   }

@@ -6,9 +6,15 @@ import Link from 'next/link';
 import { Keyboard, BookOpen } from 'lucide-react';
 import { useUser } from '@/firebase';
 import { Skeleton } from '../ui/skeleton';
+import { useState, useEffect } from 'react';
 
 export function Courses() {
   const { user, isUserLoading } = useUser();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const coursesData = [
     {
@@ -45,7 +51,7 @@ export function Courses() {
                             <CardDescription>{course.description}</CardDescription>
                         </CardContent>
                         <CardFooter>
-                             {isUserLoading ? (
+                             {(!isClient || isUserLoading) ? (
                                 <Skeleton className="h-10 w-32" />
                             ) : (
                                 <Button asChild>
