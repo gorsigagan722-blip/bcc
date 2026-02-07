@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -6,29 +7,25 @@ import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useAuth } from '@/firebase';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
-import { SiteLogo } from '@/components/site-logo';
+import {
+  Loader2,
+  Phone,
+  Lock,
+  Send,
+  Youtube,
+  MessageCircle,
+} from 'lucide-react';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export default function LoginPage() {
-  const [passwordShown, setPasswordShown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const auth = useAuth();
   const { toast } = useToast();
-
-  const togglePasswordVisibility = () => {
-    setPasswordShown(!passwordShown);
-  };
+  const loginBgImage = PlaceHolderImages.find((img) => img.id === 'login-bg');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,8 +42,7 @@ export default function LoginPage() {
         password
       );
       const user = userCredential.user;
-      
-      // The dashboard layout will handle redirection based on verification status.
+
       if (user.emailVerified) {
         toast({
           title: `Welcome back, ${user.displayName || 'Student'}!`,
@@ -54,7 +50,6 @@ export default function LoginPage() {
         });
       }
       router.push('/dashboard');
-
     } catch (error: any) {
       let description = 'An error occurred during login. Please try again.';
       if (
@@ -74,94 +69,89 @@ export default function LoginPage() {
     }
   };
 
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
-      <div className="w-full max-w-md space-y-6">
-        <div className="text-center">
-          <Link href="/" className="mb-4 inline-flex items-center gap-2">
-            <SiteLogo className="h-8 w-8" />
-            <span className="text-2xl font-bold">
-              Bharat Communication Center
-            </span>
-          </Link>
-        </div>
-        <Card>
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Student Login</CardTitle>
-            <CardDescription>
-              Enter your credentials to access your dashboard.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  required
-                  autoComplete="email"
-                  disabled={isLoading}
-                />
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Password</Label>
-                  <Link
-                    href="/forgot-password"
-                    className="text-sm font-medium text-primary underline-offset-4 hover:underline"
-                  >
-                    Forgot Password?
-                  </Link>
-                </div>
-                <div className="relative">
-                    <Input
-                        id="password"
-                        name="password"
-                        type={passwordShown ? 'text' : 'password'}
-                        required
-                        autoComplete="current-password"
-                        disabled={isLoading}
-                        className="pr-10"
-                    />
-                    <button
-                        type="button"
-                        onClick={togglePasswordVisibility}
-                        disabled={isLoading}
-                        className="absolute inset-y-0 right-0 flex items-center justify-center h-full w-10 text-muted-foreground"
-                        aria-label="Toggle password visibility"
-                    >
-                        {passwordShown ? (
-                            <EyeOff className="h-5 w-5" />
-                        ) : (
-                            <Eye className="h-5 w-5" />
-                        )}
-                    </button>
-                </div>
-              </div>
+  const socialLinks = [
+    { icon: Phone, href: '#' },
+    { icon: Send, href: '#' },
+    { icon: Youtube, href: '#' },
+    { icon: MessageCircle, href: '#' },
+  ];
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Login
-              </Button>
-            </form>
-            <div className="mt-4 text-center text-sm text-muted-foreground">
-              Don't have an account?{' '}
+  return (
+    <div className="min-h-screen w-full lg:grid lg:grid-cols-2">
+      <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex">
+        {loginBgImage && (
+          <Image
+            src={loginBgImage.imageUrl}
+            alt={loginBgImage.description}
+            data-ai-hint={loginBgImage.imageHint}
+            fill
+            className="object-cover"
+            priority
+          />
+        )}
+      </div>
+      <div className="flex items-center justify-center py-12">
+        <div className="mx-auto grid w-[350px] gap-6">
+          <div className="flex items-center justify-between">
+            <Button variant="outline" asChild>
+              <Link href="/dashboard">Dashboard</Link>
+            </Button>
+            <h1 className="text-3xl font-bold">LOGIN</h1>
+          </div>
+          <form onSubmit={handleSubmit} className="grid gap-4">
+            <div className="relative">
+              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Phone"
+                required
+                className="pl-10"
+                disabled={isLoading}
+              />
+            </div>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Password"
+                required
+                className="pl-10"
+                disabled={isLoading}
+              />
+            </div>
+
+            <div className="text-right">
               <Link
-                href="/signup"
-                className={
-                  isLoading
-                    ? 'pointer-events-none'
-                    : 'font-medium text-primary underline-offset-4 hover:underline'
-                }
+                href="/forgot-password"
+                className="text-sm text-muted-foreground hover:text-primary underline-offset-4 hover:underline"
               >
-                Sign up
+                Forgot Your Password?
               </Link>
             </div>
-          </CardContent>
-        </Card>
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              LOGIN
+            </Button>
+          </form>
+          <div className="mt-4 text-center text-sm">
+            <p className="text-muted-foreground mb-4">Stay Connected With Us</p>
+            <div className="flex items-center justify-center gap-4">
+              {socialLinks.map((social, index) => (
+                <Link
+                  href={social.href}
+                  key={index}
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white transition-transform hover:scale-110"
+                >
+                  <social.icon className="h-5 w-5" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
