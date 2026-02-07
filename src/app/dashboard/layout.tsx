@@ -5,6 +5,8 @@ import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import PageLoader from '@/components/ui/page-loader';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 
 export default function DashboardLayout({
@@ -14,6 +16,7 @@ export default function DashboardLayout({
 }) {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
+  const bgImage = PlaceHolderImages.find((img) => img.id === 'background-image');
 
   useEffect(() => {
     if (isUserLoading) {
@@ -33,5 +36,18 @@ export default function DashboardLayout({
   }
   
   // Once verified, show the dashboard
-  return <DashboardShell>{children}</DashboardShell>;
+  return (
+    <div className="relative min-h-screen w-full">
+      {bgImage && (
+          <Image
+            src={bgImage.imageUrl}
+            alt={bgImage.description}
+            data-ai-hint={bgImage.imageHint}
+            fill
+            className="object-cover -z-10"
+          />
+      )}
+      <DashboardShell>{children}</DashboardShell>
+    </div>
+  );
 }

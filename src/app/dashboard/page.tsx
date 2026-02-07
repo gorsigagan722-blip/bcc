@@ -2,8 +2,8 @@
 
 import { useUser } from '@/firebase';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { YourCourses } from '@/components/dashboard/your-courses';
-import { QuickActions } from '@/components/dashboard/quick-actions';
+import { MainContent } from '@/components/dashboard/main-content';
+import { Stats } from '@/components/dashboard/stats';
 
 export default function StudentDashboardPage() {
   const { user } = useUser();
@@ -15,8 +15,8 @@ export default function StudentDashboardPage() {
 
   return (
     <div className="space-y-8 animate-fade-in-up">
-      <header className="overflow-hidden rounded-xl border bg-card shadow-lg">
-        <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-6 md:p-8">
+      <header className="overflow-hidden rounded-xl border bg-card/80 shadow-sm backdrop-blur-sm">
+        <div className="p-6 md:p-8">
             <div className="flex flex-col-reverse items-start justify-between gap-4 md:flex-row">
                 <div className="space-y-2">
                     <h1 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
@@ -28,7 +28,7 @@ export default function StudentDashboardPage() {
                 </div>
                 <div className="flex w-full items-center justify-between md:w-auto md:justify-start md:gap-4">
                     <div className="rounded-full border bg-background/50 px-3 py-1.5 text-xs font-medium backdrop-blur-sm">
-                        ID: #{user?.uid.slice(0, 6) ?? 'N/A'}
+                        Student ID: #{user?.uid.slice(0, 6).toUpperCase() ?? 'N/A'}
                     </div>
                     <Avatar className="h-10 w-10 border-2 border-primary/50">
                     <AvatarImage src={user?.photoURL ?? undefined} />
@@ -39,9 +39,9 @@ export default function StudentDashboardPage() {
         </div>
       </header>
       
-      <QuickActions />
+      <Stats />
 
-      <YourCourses />
+      <MainContent />
 
     </div>
   );

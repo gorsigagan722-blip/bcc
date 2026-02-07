@@ -11,6 +11,7 @@ import {
   LogOut,
   Settings,
   User as UserIcon,
+  Keyboard,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -29,7 +30,7 @@ import { cn } from '@/lib/utils';
 const navLinks = [
   { href: '/dashboard', label: 'Dashboard', icon: Gauge },
   { href: '/dashboard/profile', label: 'Profile', icon: UserIcon },
-  { href: '/dashboard/typing', label: 'Typing Practice', icon: SiteLogo },
+  { href: '/dashboard/typing', label: 'Typing Practice', icon: Keyboard },
   { href: '/dashboard/steno', label: 'Steno Practice', icon: Book },
   {
     href: '/dashboard/materials',
