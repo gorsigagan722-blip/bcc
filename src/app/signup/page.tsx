@@ -33,6 +33,7 @@ export default function SignupPage() {
     const formData = new FormData(e.currentTarget);
     const name = formData.get('name') as string;
     const email = formData.get('email') as string;
+    const phone = formData.get('phone') as string;
     const password = formData.get('password') as string;
     
     // Split name into first and last for Firestore
@@ -59,6 +60,7 @@ export default function SignupPage() {
         lastName,
         displayName,
         email: user.email,
+        phone: phone,
         role: 'student',
       };
       

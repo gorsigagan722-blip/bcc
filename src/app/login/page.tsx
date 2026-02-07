@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import {
   Loader2,
-  Phone,
+  Mail,
   Lock,
 } from 'lucide-react';
 import Image from 'next/image';
@@ -89,12 +89,12 @@ export default function LoginPage() {
           <h1 className="text-3xl font-bold text-center -mt-4">LOGIN</h1>
           <form onSubmit={handleSubmit} className="grid gap-4">
             <div className="relative">
-              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 id="email"
                 name="email"
                 type="email"
-                placeholder="Phone"
+                placeholder="Email"
                 required
                 className="pl-10"
                 disabled={isLoading}

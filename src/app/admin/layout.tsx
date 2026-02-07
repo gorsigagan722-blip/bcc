@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useUser, useFirestore } from '@/firebase';
+import { useUser, useFirestore, useAuth } from '@/firebase';
+import { signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { usePathname, useRouter } from 'next/navigation';
 import PageLoader from '@/components/ui/page-loader';
@@ -13,6 +14,7 @@ export default function AdminLayout({
 }) {
   const { user, isUserLoading } = useUser();
   const firestore = useFirestore();
+  const auth = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -41,12 +43,13 @@ export default function AdminLayout({
     }
 
     const checkAdminRole = async () => {
+      if (!firestore) return;
       const userDocRef = doc(firestore, 'users', user.uid);
       const userDoc = await getDoc(userDocRef);
       if (userDoc.exists() && userDoc.data().role === 'admin') {
         setIsAdmin(true);
       } else {
-        await auth.signOut();
+        await signOut(auth);
         router.replace('/');
       }
       setIsCheckingRole(false);
@@ -54,7 +57,7 @@ export default function AdminLayout({
 
     checkAdminRole();
 
-  }, [user, isUserLoading, firestore, router, isPublicAdminPage, pathname]);
+  }, [user, isUserLoading, firestore, router, isPublicAdminPage, pathname, auth]);
 
   if (isUserLoading || (!isPublicAdminPage && isCheckingRole)) {
     return <PageLoader />;
