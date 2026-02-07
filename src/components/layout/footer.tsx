@@ -1,9 +1,17 @@
+'use client';
 
 import { Mail, Phone } from 'lucide-react';
 import Link from 'next/link';
 import { SiteLogo } from '../site-logo';
+import { useEffect, useState } from 'react';
 
 export function Footer() {
+  const [year, setYear] = useState<number | null>(null);
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
+
   return (
     <footer className="bg-card" id="contact">
       <div className="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
@@ -39,7 +47,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Bharat Communication Center. All rights reserved.</p>
+          <p>&copy; {year} Bharat Communication Center. All rights reserved.</p>
         </div>
       </div>
     </footer>
